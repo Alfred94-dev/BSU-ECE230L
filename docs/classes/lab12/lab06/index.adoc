@@ -1,0 +1,174 @@
+= Lab 06 - Number Representations
+:source-highlighter: highlight.js
+:highlightjs-languages: verilog
+:icons: font
+:toc:
+:last-update-label!:
+
+xref:class.zip[Download Class Materials]
+
+== Introduction
+
+In a previous lab, we designed adder circuitry to sum two numbers
+together. These circuits even became so advanced as to be able to chain
+effectively indefinitely to sum numbers of arbitrary binary width.
+
+This begs an interesting question… How do we subtract? In this lab, we are
+going to work our way to Two’s Compliment to discover why it is so important
+and powerful as a concept within computer science.
+
+== Reference Materials
+
+This lab has optional (but recommended) additional reading. If you are having
+any trouble please make sure you have read the following first:
+
+* xref:number_theory.adoc[Explanation and Derivation of Ones/Twos Compliment]
+* xref:help_on_ones.adoc[Ones Compliment Implementation Help]
+* xref:verilog_project_layout.adoc[Help on Verilog Project Layout]
+
+The number theory document walks through engineering the solutions to all of
+the required modules below. Use it to augment your class learning to complete
+the lab.
+
+=== Half Subtractor
+
+.Half Subtractor Truth Table
+[cols=",,,",options="header",]
+|===
+|A |B |Y |Borrow
+|0 |0 |0 |0
+|0 |1 |1 |1
+|1 |0 |1 |0
+|1 |1 |0 |0
+|===
+
+IMPORTANT: In the file `half_sub.v`, implement the equations for the
+half subtractor truth table above. Use the half adder from previous labs
+for inspiration. You can also generate the two input KMaps for each of Y
+and Borrow to derive the equations if you would like. Use the following
+table for your inputs and outputs in your `top.v`. Run the simulation to
+make sure your adder follows the truth table before you proceed.
+
+[cols=",,",options="header",]
+|===
+|Signal |Purpose |Direction
+|sw[0] |A of subtractor |IN
+|sw[1] |B of subtractor |IN
+|led[0] |Y of subtractor |OUT
+|led[1] |Borrow of subtractor |OUT
+|===
+
+
+=== Ones Compliment
+
+IMPORTANT: In the file `ones_compliment.v` implement a block that
+does ones compliment addition between two four bit numbers using the IO
+table below:
+
+[cols=",,",options="header",]
+|===
+|Signal |Purpose |Direction
+|sw[2] |Number A bit 0 |IN
+|sw[3] |Number A bit 1 |IN
+|sw[4] |Number A bit 2 |IN
+|sw[5] |Number A bit 3 |IN
+|sw[6] |Number B bit 0 |IN
+|sw[7] |Number B bit 1 |IN
+|sw[8] |Number B bit 2 |IN
+|sw[9] |Number B bit 3 |IN
+|led[2] |Ones’ Compliment addition bit 0 |OUT
+|led[3] |Ones’ Compliment addition bit 1 |OUT
+|led[4] |Ones’ Compliment addition bit 2 |OUT
+|led[5] |Ones’ Compliment addition bit 3 |OUT
+|===
+
+NOTE: Use the `full_adder.v` from last week.
+
+WARNING: Please read xref:help_on_ones.adoc[this] because there is a wrong way to
+do this that will still work. Alternatively, if you have seen this
+critical warning in your output and/or have run into the `test.py`
+executing forever, you may want to read xref:help_on_ones.adoc[this]:
+
+.Combinatorial loop
+image::img/combinatorial_loop.png[Combinatorial loop]
+
+=== Twos Compliment
+
+IMPORTANT: Implement a Twos’ Compliment *converter* in the file
+`twos_compliment.v` on an 8 bit number using the following IO Table.
+
+WARNING: This is not a Two's Compliment adder, just a converter. It should take
+in an 8 bit number and output its Two's Compliment.
+
+[cols=",,",options="header",]
+|===
+|Signal |Purpose |Direction
+|sw[2] |Number bit 0 |IN
+|sw[3] |Number bit 1 |IN
+|sw[4] |Number bit 2 |IN
+|sw[5] |Number bit 3 |IN
+|sw[6] |Number bit 4 |IN
+|sw[7] |Number bit 5 |IN
+|sw[8] |Number bit 6 |IN
+|sw[9] |Number bit 7 |IN
+|led[6] |Twos’ Compliment bit 0 |OUT
+|led[7] |Twos’ Compliment bit 1 |OUT
+|led[8] |Twos’ Compliment bit 2 |OUT
+|led[9] |Twos’ Compliment bit 3 |OUT
+|led[10] |Twos’ Compliment bit 4 |OUT
+|led[11] |Twos’ Compliment bit 5 |OUT
+|led[12] |Twos’ Compliment bit 6 |OUT
+|led[13] |Twos’ Compliment bit 7 |OUT
+|===
+
+NOTE: Use the `full_adder.v` from week 4.
+
+TIP: These are the same eight switches we use for the Ones Compliment adder
+above, but that’s fine – they can go to the inputs of more than one
+module.
+
+=== Lab Deliverables
+
+.IO Table
+[cols=",,",options="header",]
+|===
+|Signal |Purpose |Direction
+|sw[0] |A of subtractor |IN
+|sw[1] |B of subtractor |IN
+|sw[2] |Number A bit 0 (for Ones Compliment) |IN
+|sw[3] |Number A bit 1 (for Ones Compliment) |IN
+|sw[4] |Number A bit 2 (for Ones Compliment) |IN
+|sw[5] |Number A bit 3 (for Ones Compliment) |IN
+|sw[6] |Number B bit 0 (for Ones Compliment) |IN
+|sw[7] |Number B bit 1 (for Ones Compliment) |IN
+|sw[8] |Number B bit 2 (for Ones Compliment) |IN
+|sw[9] |Number B bit 3 (for Ones Compliment) |IN
+|sw[2] |Number bit 0 (for Twos Compliment) |IN
+|sw[3] |Number bit 1 (for Twos Compliment) |IN
+|sw[4] |Number bit 2 (for Twos Compliment) |IN
+|sw[5] |Number bit 3 (for Twos Compliment) |IN
+|sw[6] |Number bit 4 (for Twos Compliment) |IN
+|sw[7] |Number bit 5 (for Twos Compliment) |IN
+|sw[8] |Number bit 6 (for Twos Compliment) |IN
+|sw[9] |Number bit 7 (for Twos Compliment) |IN
+|led[0] |Y of subtractor |OUT
+|led[1] |Borrow of subtractor |OUT
+|led[2] |Ones’ Compliment addition bit 0 |OUT
+|led[3] |Ones’ Compliment addition bit 1 |OUT
+|led[4] |Ones’ Compliment addition bit 2 |OUT
+|led[5] |Ones’ Compliment addition bit 3 |OUT
+|led[6] |Twos’ Compliment bit 0 |OUT
+|led[7] |Twos’ Compliment bit 1 |OUT
+|led[8] |Twos’ Compliment bit 2 |OUT
+|led[9] |Twos’ Compliment bit 3 |OUT
+|led[10] |Twos’ Compliment bit 4 |OUT
+|led[11] |Twos’ Compliment bit 5 |OUT
+|led[12] |Twos’ Compliment bit 6 |OUT
+|led[13] |Twos’ Compliment bit 7 |OUT
+|===
+
+* `half_sub.v`
+* `full_adder.v` From last lab
+* `ones_compliment.v`
+* `twos_compliment.v`
+* `top.v` with everything hooked up
