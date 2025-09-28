@@ -1,0 +1,54 @@
+= Flipping And Flopping Our Way To Displays
+:last-update-label!:
+:source-highlighter: highlight.js
+:highlightjs-languages: verilog
+:revealjs_theme: simple
+:revealjs_width: 1600
+:revealjs_height: 900
+:revealjs_margin: 0.05
+:customcss: img/extra.css
+:icons: font
+
+== Level vs Edge Sensitive
+
+=== Level Sensitive
+
+.D-Latch Output
+image::img/dlatch_output.png[width=1400px]
+
+=== Edge Sensitive
+
+.Edge vs. Level Sensitivity
+[plantuml,format=svg,width=1400]
+....
+include::src/level_vs_edge.puml[]
+....
+
+=== Edge detector and D-FlipFlop
+
+.Pulse Detector and D-Latch
+image::img/dff_diagram.drawio.svg[width=1400px]
+
+=== Behavioral Implementation
+
+[.big-code]
+[source,verilog]
+----
+include::src/byte_storage.v[tag=with_ff]
+----
+
+== State Tables
+
+Excitation, Characteristic, and Truth Tables
+
+=== Truth Table
+
+include::src/d_ff_truth_table.adoc[]
+
+=== Characteristic Table
+
+include::src/d_ff_char_table.adoc[]
+
+=== Excitation Table
+
+include::src/d_ff_ex_table.adoc[]
